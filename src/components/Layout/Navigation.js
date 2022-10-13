@@ -37,7 +37,7 @@ function Navigation() {
                 />
               </div>
               <div className="ml-2 font-bold text-wmsu-red">
-                <p>
+                <p className="flex flex-col">
                   WESTERN MINDANAO <span>STATE UNIVERSITY</span>
                 </p>
               </div>
