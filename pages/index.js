@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LayoutGlobal from "../src/components/Layout/LayoutGlobal";
 import Layout from "../src/components/Layout/Layout";
 import Platform from "../src/components/Layout/Platform";
 import Footer from "../src/components/Layout/footer";
+import Image from "next/image";
 import Link from "next/link";
 import { Info as InfoIcon, LogIn as LogInIcon } from "lucide-react";
+import LoginModal from "../src/components/modals/login_modal";
 
-export default function Index() {
+export default function Index(onClose) {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClose = (e) => {
+    if( e.target.id === "wrapper") onClose();
+}
   return (
     <>
       <Platform className="mt-6">
@@ -17,18 +24,17 @@ export default function Index() {
                 WMSU HUMAN RESOURCES INFORMATION{" "}
                 <span className="text-wmsu-red">SYSTEM</span>
               </h1>
-              <p className="mt-3 text-center text-sm text-white">
+              <p className="mt-3 text-center text-base text-white">
                 Access all available data in just one click.
               </p>
-              <div class="container mx-auto px-4 mt-8">
+              <div class="container mx-auto px-4 mt-5">
                <div className="flex justify-center mb-0">
-                <Link href="/#login">
-                    <button className="items-center text-sm py-1 px-3 uppercase bg-wmsu-red p-2 font-semibold text-white text-md cursor-pointer hover:bg-red-700">
+                    <button onClick={() => setShowModal(true)}
+                    className="items-center text-sm py-2 px-5 rounded-md uppercase bg-wmsu-red p-2 font-semibold text-white text-md cursor-pointer hover:bg-red-700">
                       Login
                     </button>
-                  </Link>
-                  <Link href="/#login">
-                    <button className="items-center text-sm py-1 px-3 uppercase ml-2 bg-wmsu-red p-2 font-semibold text-white text-md cursor-pointer hover:bg-red-700">
+                  <Link href="/#learnmore">
+                    <button type="button" className="items-center text-sm py-2 px-5 rounded-md border uppercase ml-2  p-2 font-semibold text-white text-md cursor-pointer">
                       Learn More
                     </button>
                   </Link>
@@ -45,7 +51,7 @@ export default function Index() {
               <div class="flex mt-0 justify-center">
                 <div class="w-16 h-1 mb-3 rounded-full bg-red-700 inline-flex"></div>
               </div>
-              <p class=" mx-auto leading-relaxed mt-3 mb-1 text-center text-sm text-black">
+              <p class=" mx-auto leading-relaxed mt-12 mb-1 text-center text-base text-black">
               The importance of having effective teachers is the key to a student's learning. 
               Here, we aim to have a system to predict performance using data mining techniques 
               with comparative analysis (Random Forest Support Vector Machine (SVM), Decision 
@@ -140,6 +146,41 @@ export default function Index() {
            </div>
         </section>
       </div>
+      <LoginModal isvisible={showModal} onClose={() => setShowModal(false)}>
+        <div class="w-full max-w-xs ">
+          <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 rounded-xl">
+            <div class="mb-8 text-center">
+              <h1 class="my-3 text-2xl font-bold">Please log in</h1>
+              <div className="w-full h-1 bg-wmsu-red" />
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                Username
+              </label>
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text">
+            </input>
+            </div>
+            <div class="mb-6">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                Password
+              </label>
+              <input class="shadow appearance-none border  rounded w-full py-2 px-2 text-gray-700  leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" >
+              </input>
+              <a class=" font-bold text-sm text-red-700 hover:text-red-500 mb-3" href="#">
+                Forgot Password?
+              </a>
+            </div>
+            <div class="flex items-center justify-between">
+              <button class="bg-wmsu-red hover:bg-red-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline" type="button">
+                Login
+              </button>
+              <button  type="button" id="wrapper"
+                  class=" py-2 px-8 text-red-600 border hover:bg-red-0 border-red-700 rounded focus:outline-none focus:shadow-outline inline-block align-baseline">Cancel
+                  </button>
+            </div>
+          </form>
+        </div>
+      </LoginModal>
       </Platform>
       <Footer />
     </>
