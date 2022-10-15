@@ -15,8 +15,18 @@ function Navigation() {
       pin: true,
     },
     {
-      name: "About",
-      href: "/#about",
+      name: "Abstract",
+      href: "/#Abstract",
+      pin: false,
+    },
+    {
+      name: "Features",
+      href: "/#features",
+      pin: false,
+    },
+    {
+      name: "Login",
+      href: "/#Login",
       pin: false,
     },
   ];
