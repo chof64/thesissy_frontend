@@ -182,7 +182,9 @@ export default function Index(onClose) {
         </div>
       </LoginModal>
       </Platform>
-      <Footer />
+      <Footer>
+        <div>hello footer</div>  
+      </Footer>
     </>
   );
 }
