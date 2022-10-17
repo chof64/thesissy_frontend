@@ -16,63 +16,63 @@ export default function Dashboard() {
             </div>
             <div className="container">
                 <div class="grid grid-cols-4 gap-4 md:grid-cols-4 ">
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+                    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-red-600">
                         <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">01</div>
+                            <div class="font-bold text-xl mb-2 text-white">01</div>
                         </div>
                     </div>
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+                    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-red-600">
                         <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">01</div>
+                            <div class="font-bold text-xl mb-2 text-white">02</div>
                         </div>
                     </div>
                 </div>
             </div>
          </div>
-            <div className="container my-1">
+            <div className="container my-5">
                 <div class="grid grid-cols-4 gap-4 ">
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">01</div>
+                    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-red-600">
+                        <div class="px-8 py-6">
+                            <div class="font-bold text-xl mb-2 text-white">01</div>
                         </div>
                     </div>
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">01</div>
+                    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-red-600">
+                        <div class="px-8 py-6">
+                            <div class="font-bold text-xl mb-2 text-white">01</div>
                         </div>
                     </div>
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">01</div>
+                    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-red-600">
+                        <div class="px-8 py-6">
+                            <div class="font-bold text-xl mb-2 text-white">01</div>
                         </div>
                     </div>
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">01</div>
+                    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-red-600">
+                        <div class="px-8 py-6">
+                            <div class="font-bold text-xl mb-2 text-white">01</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="container my-3">
             <div class="grid grid-cols-3 gap-4">
-                    <div class="col-span-2 rounded overflow-hidden shadow-lg">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">01</div>
+                    <div class="col-span-2 rounded overflow-hidden shadow-lg bg-red-600">
+                        <div class="px-18 py-16">
+                            <div class="font-bold text-xl mb-2 text-white"></div>
                         </div>
                     </div>
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">01</div>
+                    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-red-600">
+                        <div class="px-18 py-16">
+                            <div class="font-bold text-xl mb-2 text-white"></div>
                         </div>
                     </div>
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">01</div>
+                    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-red-600">
+                        <div class="px-18 py-16">
+                            <div class="font-bold text-xl mb-2 text-white"></div>
                         </div>
                     </div>
-                    <div class="col-span-2 rounded overflow-hidden shadow-lg">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">01</div>
+                    <div class="col-span-2 rounded overflow-hidden shadow-lg bg-red-600">
+                        <div class="px-18 py-16">
+                            <div class="font-bold text-xl mb-2 text-white"></div>
                         </div>
                     </div>
             </div>
