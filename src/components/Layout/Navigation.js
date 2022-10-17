@@ -1,5 +1,6 @@
-import React, { forwardRef } from "react";
+import { primary } from "/config/navigation.config";
 
+import React, { forwardRef } from "react";
 import { Menu } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,33 +11,7 @@ import Platform from "./Platform";
 import { classMerge } from "/src/utils/TailwindUtilities";
 
 export default function Navigation() {
-  const NAVIGATION = [
-    {
-      group: "Pages",
-      items: [
-        {
-          name: "Home",
-          href: "/",
-          pin: true,
-        },
-        {
-          name: "Abstract",
-          href: "/#Abstract",
-          pin: false,
-        },
-        {
-          name: "Features",
-          href: "/#features",
-          pin: false,
-        },
-        {
-          name: "Login",
-          href: "/#Login",
-          pin: false,
-        },
-      ],
-    },
-  ];
+  const NAVIGATION = primary;
 
   const MenuLink = forwardRef((props, ref) => {
     MenuLink.displayName = "MenuLink";
@@ -70,7 +45,7 @@ export default function Navigation() {
       {({ open }) => (
         <>
           <Platform className="py-3 ">
-            <div className="flex w-full items-center justify-between">
+            <div className="flex items-center justify-between w-full">
               <Link href="/">
                 <div className="flex items-center">
                   <div className="relative aspect-square h-14 w-14">
@@ -99,7 +74,7 @@ export default function Navigation() {
             </div>
           </Platform>
           <div className="absolute w-full">
-            <div className="absolute mt-8 flex w-full justify-center">
+            <div className="absolute flex justify-center w-full mt-8">
               {/* // TODO: Adjust tray sizes across different viewports. */}
               <Menu.Items
                 as="div"
@@ -107,10 +82,10 @@ export default function Navigation() {
               >
                 {NAVIGATION.map((group) => (
                   <div key={group.group}>
-                    <h2 className="text-xs font-bold uppercase text-gray-400">
+                    <h2 className="text-xs font-bold text-gray-400 uppercase">
                       {group.group}
                     </h2>
-                    <div className="mt-1 flex flex-col gap-y-1">
+                    <div className="flex flex-col mt-1 gap-y-1">
                       {group.items.map((item) => (
                         <Menu.Item key={item.name}>
                           {({ active }) => (
