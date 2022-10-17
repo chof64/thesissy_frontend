@@ -15,28 +15,28 @@ export default function Index(onClose) {
   return (
     <>
       <Platform className="mt-6">
-        <div className="flex w-full flex-col items-center justify-center ">
+        <div className="flex flex-col items-center justify-center w-full ">
           <div className="h-72 w-full rounded-md bg-[url('/images/hero-background-image.jpg')] bg-cover">
-            <div className="flex h-full  w-full flex-col items-center justify-center  rounded-md bg-red-900/50">
-              <h1 className="text-center text-3xl font-bold text-white">
+            <div className="flex flex-col items-center justify-center w-full h-full rounded-md bg-red-900/50">
+              <h1 className="text-3xl font-bold text-center text-white">
                 WMSU HUMAN RESOURCES INFORMATION{" "}
                 <span className="text-wmsu-red">SYSTEM</span>
               </h1>
-              <p className="mt-3 text-center text-base text-white">
+              <p className="mt-3 text-base text-center text-white">
                 Access all available data in just one click.
               </p>
               <div class="container mx-auto mt-5 px-4">
-                <div className="mb-0 flex justify-center">
+                <div className="flex justify-center mb-0">
                   <button
                     onClick={() => setShowModal(true)}
-                    className="text-md cursor-pointer items-center rounded-md bg-wmsu-red p-2 py-2 px-5 text-sm font-semibold uppercase text-white hover:bg-red-700"
+                    className="items-center p-2 px-5 py-2 text-sm font-semibold text-white uppercase rounded-md cursor-pointer text-md bg-wmsu-red hover:bg-red-700"
                   >
                     Login
                   </button>
                   <Link href="/#learnmore">
                     <button
                       type="button"
-                      className="text-md ml-2 cursor-pointer items-center rounded-md border p-2 py-2  px-5 text-sm font-semibold uppercase text-white"
+                      className="items-center p-2 px-5 py-2 ml-2 text-sm font-semibold text-white uppercase border rounded-md cursor-pointer text-md"
                     >
                       Learn More
                     </button>
@@ -215,7 +215,7 @@ export default function Index(onClose) {
             <form class="mb-4 rounded-xl bg-white px-8 pt-6 pb-8 shadow-md">
               <div class="mb-8 text-center">
                 <h1 class="my-3 text-2xl font-bold">Please log in</h1>
-                <div className="h-1 w-full bg-wmsu-red" />
+                <div className="w-full h-1 bg-wmsu-red" />
               </div>
               <div class="mb-4">
                 <label
