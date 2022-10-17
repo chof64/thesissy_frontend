@@ -47,8 +47,8 @@ export default function Navigation() {
           <Platform className="py-3 ">
             <div className="flex items-center justify-between w-full">
               <Link href="/">
-                <div className="flex items-center">
-                  <div className="relative aspect-square h-14 w-14">
+                <div className="flex items-center cursor-pointer">
+                  <div className="relative h-14 w-14">
                     <Image
                       src="/wmsu-logo-600x600.png"
                       layout="fill"
@@ -57,7 +57,7 @@ export default function Navigation() {
                       priority
                     />
                   </div>
-                  <div className="ml-2 font-bold text-wmsu-red">
+                  <div className="ml-2 font-bold text-red-700 hover:text-red-800">
                     <p className="flex flex-col">
                       WESTERN MINDANAO <span>STATE UNIVERSITY</span>
                     </p>
@@ -66,9 +66,9 @@ export default function Navigation() {
               </Link>
               <Menu.Button>
                 {open ? (
-                  <XIcon className="h-10 w-10 stroke-[3] text-wmsu-red" />
+                  <XIcon className="h-9 w-9 stroke-[2] text-red-700" />
                 ) : (
-                  <MenuIcon className="h-10 w-10 stroke-[3] text-wmsu-red" />
+                  <MenuIcon className="h-9 w-9 stroke-[2] text-red-700" />
                 )}
               </Menu.Button>
             </div>
@@ -78,7 +78,7 @@ export default function Navigation() {
               {/* // TODO: Adjust tray sizes across different viewports. */}
               <Menu.Items
                 as="div"
-                className="flex max-h-[55vh] w-[95vw] flex-col gap-y-2.5 overflow-auto rounded-lg border border-neutral-300 bg-gray-200 p-2 shadow-md shadow-gray-200/50 focus:outline-none md:w-[70vw] md:p-4 lg:w-[50vw]"
+                className="flex max-h-[55vh] w-[95vw] flex-col gap-y-2.5 overflow-auto rounded-lg border-2 border-neutral-300 bg-white p-2 md:w-[70vw] md:p-4 lg:w-[50vw]"
               >
                 {NAVIGATION.map((group) => (
                   <div key={group.group}>
@@ -93,8 +93,10 @@ export default function Navigation() {
                               href={item.href}
                               external={item.external}
                               className={classMerge(
-                                "flex items-center gap-x-2 rounded-md bg-gray-50 px-4 py-3 font-bold",
-                                active ? "bg-neutral-100 text-teal-600" : null
+                                "flex items-center rounded-md px-4 py-3 font-bold",
+                                active
+                                  ? "bg-red-50 text-red-700"
+                                  : "bg-neutral-50"
                               )}
                             >
                               {item.name}
