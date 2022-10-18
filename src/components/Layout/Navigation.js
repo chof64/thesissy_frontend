@@ -1,85 +1,124 @@
-import React from "react";
+import { primary } from "/config/navigation.config";
+
+import React, { forwardRef } from "react";
+import { Menu } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu as MenuIcon, X as XIcon } from "lucide-react";
+
 import Platform from "./Platform";
-import * as Dialog from "@radix-ui/react-dialog";
 
-function Navigation() {
-  const [open, setOpen] = React.useState(false);
+import { classMerge } from "/src/utils/TailwindUtilities";
 
-  const NAVIGATION = [
-    {
-      name: "Home",
-      href: "/",
-      pin: true,
-    },
-    {
-      name: "Abstract",
-      href: "/#Abstract",
-      pin: false,
-    },
-    {
-      name: "Features",
-      href: "/#features",
-      pin: false,
-    },
-    {
-      name: "Login",
-      href: "/#Login",
-      pin: false,
-    },
-  ];
+export default function Navigation() {
+  const NAVIGATION = primary;
+
+  const MenuLink = forwardRef((props, ref) => {
+    MenuLink.displayName = "MenuLink";
+    let { external = false, href, children, ...rest } = props;
+
+    if (external) {
+      return (
+        <a
+          href={href}
+          ref={ref}
+          target="_blank"
+          rel="noopener noreferrer"
+          {...rest}
+        >
+          {children}
+        </a>
+      );
+    }
+
+    return (
+      <Link href={href}>
+        <a ref={ref} {...rest}>
+          {children}
+        </a>
+      </Link>
+    );
+  });
 
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Platform className="py-3 ">
-        <div className="flex w-full items-center justify-between">
-          <Link href="/">
-            <div className="flex items-center">
-              <div className="relative aspect-square h-14 w-14">
-                <Image
-                  src="/wmsu-logo-600x600.png"
-                  layout="fill"
-                  objectFit="cover"
-                  alt="wmsu logo"
-                  priority
-                />
-              </div>
-              <div className="ml-2 font-bold text-wmsu-red">
-                <p className="flex flex-col">
-                  WESTERN MINDANAO <span>STATE UNIVERSITY</span>
-                </p>
-              </div>
+    <Menu>
+      {({ open }) => (
+        <>
+          <Platform className="py-3 ">
+            <div className="flex items-center justify-between w-full">
+              <Link href="/">
+                <div className="flex items-center cursor-pointer">
+                  <div className="relative h-14 w-14">
+                    <Image
+                      src="/wmsu-logo-600x600.png"
+                      layout="fill"
+                      objectFit="cover"
+                      alt="wmsu logo"
+                      priority
+                    />
+                  </div>
+                  <div className="ml-2 font-bold text-red-700 hover:text-red-800">
+                    <p className="flex flex-col">
+                      WESTERN MINDANAO <span>STATE UNIVERSITY</span>
+                    </p>
+                  </div>
+                </div>
+              </Link>
+              <Menu.Button>
+                {open ? (
+                  <XIcon className="h-9 w-9 stroke-[2] text-red-700" />
+                ) : (
+                  <MenuIcon className="h-9 w-9 stroke-[2] text-red-700" />
+                )}
+              </Menu.Button>
             </div>
-          </Link>
-          <Dialog.Trigger>
-            {open ? (
-              <XIcon className="h-10 w-10 stroke-[3] text-wmsu-red" />
-            ) : (
-              <MenuIcon className="h-10 w-10 stroke-[3] text-wmsu-red" />
-            )}
-          </Dialog.Trigger>
-        </div>
-      </Platform>
-      <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 flex h-full w-full justify-center bg-black/20">
-          <Dialog.Content className="mt-32 max-h-[60vh] w-[90vw] rounded-md bg-white p-2">
-            <div className="flex flex-col gap-y-0.5">
-              <p className="mb-1 text-xs font-bold">Navigation</p>
-              {NAVIGATION.map((item, index) => (
-                <Link key={index} href={item.href}>
-                  <a className="p-2 text-sm font-semibold text-wmsu-red">
-                    {item.name}
-                  </a>
-                </Link>
-              ))}
+          </Platform>
+          <div className="absolute w-full">
+            <div className="absolute flex justify-center w-full mt-8">
+              {/* // TODO: Adjust tray sizes across different viewports. */}
+              <Menu.Items
+                as="div"
+                className="flex max-h-[55vh] w-[95vw] flex-col gap-y-2.5 overflow-auto rounded-lg border-2 border-neutral-300 bg-white p-2 md:w-[70vw] md:p-4 lg:w-[50vw]"
+              >
+                {NAVIGATION.map((group) => (
+                  <div key={group.group}>
+                    <h2 className="text-xs font-bold text-gray-400 uppercase">
+                      {group.group}
+                    </h2>
+                    <div className="flex flex-col mt-1 gap-y-1">
+                      {group.items.map((item) => (
+                        <Menu.Item key={item.name}>
+                          {({ active }) => (
+                            <MenuLink
+                              href={item.href}
+                              external={item.external}
+                              className={classMerge(
+                                "flex items-center rounded-md px-4 py-3 font-bold",
+                                active
+                                  ? "bg-red-50 text-red-700"
+                                  : "bg-neutral-50"
+                              )}
+                            >
+                              {item.name}
+                            </MenuLink>
+                          )}
+                        </Menu.Item>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </Menu.Items>
             </div>
-          </Dialog.Content>
-        </Dialog.Overlay>
-      </Dialog.Portal>
-    </Dialog.Root>
+            <div
+              className={classMerge(
+                open
+                  ? "fixed inset-0 -z-50 h-full w-full bg-black/20 backdrop-blur"
+                  : null
+              )}
+            />
+          </div>
+        </>
+      )}
+    </Menu>
   );
 }
-
-export default Navigation;
