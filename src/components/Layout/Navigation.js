@@ -44,7 +44,7 @@ export default function Navigation() {
     <Menu>
       {({ open }) => (
         <>
-          <Platform className="py-3 ">
+          <Platform className="py-3 bg-white">
             <div className="flex items-center justify-between w-full">
               <Link href="/">
                 <div className="flex items-center cursor-pointer">
