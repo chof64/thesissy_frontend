@@ -10,20 +10,44 @@ module.exports = {
           external: false,
         },
         {
-          name: "Abstract",
-          href: "/#Abstract",
+          name: "Dashboard",
+          href: "/dashboard",
           pin: false,
           external: false,
         },
+      ],
+    },
+  ],
+  dashboard: [
+    {
+      group: "Dashboard",
+      items: [
         {
-          name: "Features",
-          href: "/#features",
+          name: "Overview",
+          href: "/dashboard",
+          external: false,
           pin: false,
+        },
+        {
+          name: "Upload",
+          href: "/dashboard/upload",
+          external: false,
+          pin: false,
+        },
+      ],
+    },
+    {
+      group: "Pages",
+      items: [
+        {
+          name: "Home",
+          href: "/",
+          pin: true,
           external: false,
         },
         {
-          name: "Login",
-          href: "/#Login",
+          name: "Dashboard",
+          href: "/dashboard",
           pin: false,
           external: false,
         },
