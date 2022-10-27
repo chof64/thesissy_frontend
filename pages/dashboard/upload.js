@@ -23,7 +23,7 @@ export default function Upload() {
     <>
       <Tab.Group as={Fragment}>
         <Platform className="mt-10 mb-5">
-          <Tab.List className="flex items-center justify-between gap-1 p-1 bg-gray-200 rounded-md">
+          <Tab.List className="flex items-center justify-between gap-1 p-1 bg-red-700 rounded-md">
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
@@ -55,7 +55,7 @@ export default function Upload() {
             <Tab.Panel className="w-full">
               <div>
                 <h1 className="text-xl font-medium">Upload</h1>
-                <p className="text-sm">
+                <p className="text-sm mt-2">
                   Please select the Personal Data Sheet that you want to upload.
                 </p>
               </div>
@@ -72,11 +72,16 @@ export default function Upload() {
                     }}
                   />
 
-                  <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center justify-end w-full">
                     <div />
                     <button
                       type="submit"
-                      className={classMerge("mt-2 rounded-md bg-white p-2")}
+                      className={classMerge("mt-2 rounded-md bg-red-700 p-2 ")}>
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className={classMerge("mt-2 rounded-md bg-white p-2 ml-4")}
                       onClick={(e) => {
                         e.preventDefault();
                         if (selectedFile.file === null) {
