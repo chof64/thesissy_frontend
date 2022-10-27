@@ -14,6 +14,7 @@ module.exports = {
       fontFamily: {
         // TODO: Add backup fonts
         sans: ["Poppins"],
+        mono: ["JetBrains Mono"],
       },
     },
   },

@@ -64,7 +64,7 @@ export default function Index(onClose) {
                   (SVM), Decision Tree, and Naïve Bayes) to discover ways that
                   can help them better serve the educational process and ideally
                   improve their performance, which will reflect on the
-                  performance of teachers in the classroom Hence, to be able to
+                  performance of teachers in the classNameroom Hence, to be able to
                   step forward and take action for those who lack in terms of
                   teaching. As well as create a platform to know statistics of
                   faculty members in different colleges here at WMSU.

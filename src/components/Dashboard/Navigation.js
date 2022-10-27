@@ -1,4 +1,4 @@
-import { primary } from "/config/navigation.config";
+import { dashboard } from "/config/navigation.config";
 
 import React, { forwardRef } from "react";
 import { Menu } from "@headlessui/react";
@@ -6,12 +6,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Menu as MenuIcon, X as XIcon } from "lucide-react";
 
-import Platform from "./Platform";
+import Platform from "/src/components/Layout/Platform";
 
 import { classMerge } from "/src/utils/TailwindUtilities";
 
 export default function Navigation() {
-  const NAVIGATION = primary;
+  const NAVIGATION = dashboard;
 
   const MenuLink = forwardRef((props, ref) => {
     MenuLink.displayName = "MenuLink";
