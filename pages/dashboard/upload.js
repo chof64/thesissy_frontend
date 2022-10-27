@@ -13,8 +13,29 @@ export default function Upload() {
     map: null,
   });
 
+  const addFile = (e) => {
+    if (
+      e.target.files[0].type !==
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    ) {
+      e.target.value = null;
+      alert("Please upload an excel file");
+      return;
+    }
+
+    setSelectedFile({
+      ...selectedFile,
+      file: e.target.files[0],
+    });
+  };
+
   const uploadPDS = (e) => {
     e.preventDefault();
+
+    if (selectedFile.file === null) {
+      alert("Please select a file");
+      return;
+    }
 
     return;
   };
@@ -28,8 +49,10 @@ export default function Upload() {
               {({ selected }) => (
                 <button
                   className={classMerge(
-                    "w-full rounded-md p-1.5 font-semibold",
-                    selected ? "bg-white" : "hover:bg-gray-50"
+                    "w-full rounded-md p-1.5 font-bold text-white",
+                    selected
+                      ? "bg-white text-black"
+                      : "hover:bg-gray-50 hover:text-black"
                   )}
                 >
                   Upload
@@ -40,8 +63,10 @@ export default function Upload() {
               {({ selected }) => (
                 <button
                   className={classMerge(
-                    "w-full rounded-md p-1.5 font-semibold",
-                    selected ? "bg-white" : "hover:bg-gray-50"
+                    "w-full rounded-md p-1.5 font-bold text-white",
+                    selected
+                      ? "bg-white text-black"
+                      : "hover:bg-gray-50 hover:text-black"
                   )}
                 >
                   Preview
@@ -55,7 +80,7 @@ export default function Upload() {
             <Tab.Panel className="w-full">
               <div>
                 <h1 className="text-xl font-medium">Upload</h1>
-                <p className="text-sm mt-2">
+                <p className="mt-2 text-sm">
                   Please select the Personal Data Sheet that you want to upload.
                 </p>
               </div>
@@ -72,16 +97,20 @@ export default function Upload() {
                     }}
                   />
 
-                  <div className="flex items-center justify-end w-full">
-                    <div />
+                  <div className="flex items-center justify-end w-full mt-2 gap-x-2">
                     <button
-                      type="submit"
-                      className={classMerge("mt-2 rounded-md bg-red-700 p-2 ")}>
+                      type="reset"
+                      className={classMerge(
+                        "rounded-md p-2 text-sm uppercase hover:bg-red-500"
+                      )}
+                    >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className={classMerge("mt-2 rounded-md bg-white p-2 ml-4")}
+                      className={classMerge(
+                        "rounded-md bg-white p-2 text-sm font-semibold uppercase hover:bg-green-500"
+                      )}
                       onClick={(e) => {
                         e.preventDefault();
                         if (selectedFile.file === null) {
