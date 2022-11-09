@@ -4,14 +4,20 @@ import { Tab } from "@headlessui/react";
 import LayoutGlobal from "/src/components/Layout/LayoutGlobal";
 import Layout from "/src/components/Dashboard/Layout";
 import Platform from "/src/components/Layout/Platform";
+import UploadPreview from "/src/components/Dashboard/Upload/Preview";
 
-import { supabase } from "/src/utils/SupabaseClient";
+import {
+  pdsToStorage,
+  pdsStorageLink,
+} from "/src/lib/dashboard/upload/storage";
+
 import { classMerge } from "/src/utils/TailwindUtilities";
-import { uniqueString } from "/src/utils/GenerateString";
 
 export default function Upload() {
-  const [selectedFile, setSelectedFile] = useState({});
-  const [storageReceipt, setStorageReceipt] = useState({});
+  const [selectedFile, setSelectedFile] = useState({
+    file: null,
+  });
+  const [receipt, setReceipt] = useState({});
 
   const uploadPDS = async (e) => {
     e.preventDefault();
@@ -21,37 +27,28 @@ export default function Upload() {
       return;
     }
 
-    try {
-      const fileName = `${uniqueString(8)}.${
-        selectedFile.file.name.split(".")[1]
-      }`;
-
-      const { error: uploadError } = await supabase.storage
-        .from("pds-raw")
-        .upload(fileName, selectedFile.file);
-
-      if (uploadError) {
-        throw uploadError;
-      }
-
-      setStorageReceipt((prev) => ({
-        ...prev,
-        file_name: fileName,
-        default_name: selectedFile.file.name,
-      }));
-    } catch (error) {
-      alert("Supabase Storage: Error uploading file. See console for details.");
-      console.log(error);
+    // UPLOAD: PDS to Storage
+    const UPLOAD = await pdsToStorage(selectedFile.file);
+    if (UPLOAD.status === "error") {
+      alert("ERROR: `UPLOAD: PDS to Storage`");
+      console.log(UPLOAD.message);
+      return;
     }
 
-    const publicUrl = await supabase.storage
-      .from("pds-raw")
-      .getPublicUrl(storageReceipt.file_name);
+    setSelectedFile({ file: null });
 
-    setStorageReceipt((prev) => ({
-      ...prev,
-      file_url: publicUrl.data.publicUrl,
-    }));
+    // UPLOAD: Get Public URL
+    const LINK = await pdsStorageLink(UPLOAD.data.file_name);
+    if (LINK.status === "error") {
+      alert("ERROR: `UPLOAD: Get Public URL`");
+      console.log(LINK.message);
+      return;
+    }
+
+    setReceipt({
+      ...UPLOAD.data,
+      ...LINK.data,
+    });
 
     // prepare payload for backend request
   };
@@ -59,7 +56,7 @@ export default function Upload() {
     <>
       <Tab.Group as={Fragment}>
         <Platform className="mt-10 mb-5">
-          <Tab.List className="flex items-center justify-between gap-1 rounded-md bg-red-700 p-1">
+          <Tab.List className="flex items-center justify-between gap-1 p-1 bg-red-700 rounded-md">
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
@@ -91,7 +88,7 @@ export default function Upload() {
           </Tab.List>
         </Platform>
         <Platform>
-          <Tab.Panels className="flex items-center justify-center rounded-md bg-gray-200 p-2">
+          <Tab.Panels className="flex items-center justify-center p-2 bg-gray-200 rounded-md">
             <Tab.Panel className="w-full">
               <div>
                 <h1 className="text-xl font-medium">Upload</h1>
@@ -103,7 +100,7 @@ export default function Upload() {
                 <form onSubmit={uploadPDS}>
                   <input
                     type="file"
-                    className="mt-4 w-full cursor-pointer rounded-md p-4 font-mono text-sm font-semibold hover:bg-gray-100"
+                    className="w-full p-4 mt-4 font-mono text-sm font-semibold rounded-md cursor-pointer hover:bg-gray-100"
                     onChange={(e) => {
                       if (
                         e.target.files[0].type !==
@@ -121,7 +118,7 @@ export default function Upload() {
                     }}
                   />
 
-                  <div className="mt-2 flex w-full items-center justify-end gap-x-2">
+                  <div className="flex items-center justify-end w-full mt-2 gap-x-2">
                     <button
                       type="reset"
                       className={classMerge(
@@ -141,9 +138,10 @@ export default function Upload() {
                   </div>
                 </form>
               </div>
-              <div></div>
             </Tab.Panel>
-            <Tab.Panel className="w-full">Preview Content</Tab.Panel>
+            <Tab.Panel className="w-full">
+              <UploadPreview receipt={receipt} />
+            </Tab.Panel>
           </Tab.Panels>
         </Platform>
       </Tab.Group>
