@@ -48,6 +48,7 @@ export default function Upload() {
     setReceipt({
       ...UPLOAD.data,
       ...LINK.data,
+      map: {},
     });
 
     // prepare payload for backend request
