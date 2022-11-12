@@ -1,7 +1,38 @@
 import { supabase } from "/src/utils/SupabaseClient";
 import { uniqueString } from "/src/utils/GenerateString";
 
-export const pdsToStorage = async (file) => {
+export const uploadPds = async (file) => {
+  if (!file) {
+    return {
+      status: "error",
+      message: "No file selected",
+      cat: "missing file",
+    };
+  }
+
+  const UPLOAD = await _pdsToStorage(file);
+
+  if (UPLOAD.status === "error") {
+    return { status: "error", message: UPLOAD.message, cat: "upload" };
+  }
+
+  const LINK = await _pdsStorageLink(UPLOAD.data.file_name);
+
+  if (LINK.status === "error") {
+    return { status: "error", message: LINK.message, cat: "link" };
+  }
+
+  return {
+    status: "success",
+    data: {
+      file_name: UPLOAD.data.file_name,
+      default_name: UPLOAD.data.default_name,
+      file_url: LINK.data.file_url,
+    },
+  };
+};
+
+const _pdsToStorage = async (file) => {
   if (!file) {
     return {
       status: "error",
@@ -29,7 +60,7 @@ export const pdsToStorage = async (file) => {
   };
 };
 
-export const pdsStorageLink = async (file_name) => {
+const _pdsStorageLink = async (file_name) => {
   try {
     const { data, error } = await supabase.storage
       .from("pds-raw")
