@@ -1,50 +1,52 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Tab } from "@headlessui/react";
+import useSWR from "swr";
 
 import LayoutGlobal from "/src/components/Layout/LayoutGlobal";
 import Layout from "/src/components/Dashboard/Layout";
 import Platform from "/src/components/Layout/Platform";
+import UploadPreview from "/src/components/Dashboard/Upload/Preview";
+
+import { uploadPds } from "/src/lib/dashboard/upload/storage";
 
 import { classMerge } from "/src/utils/TailwindUtilities";
 
 export default function Upload() {
   const [selectedFile, setSelectedFile] = useState({
     file: null,
-    map: null,
   });
+  const [receipt, setReceipt] = useState({});
 
-  const addFile = (e) => {
-    if (
-      e.target.files[0].type !==
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    ) {
-      e.target.value = null;
-      alert("Please upload an excel file");
-      return;
-    }
-
-    setSelectedFile({
-      ...selectedFile,
-      file: e.target.files[0],
-    });
-  };
-
-  const uploadPDS = (e) => {
+  const onPdsSubmit = async (e) => {
+    //? Stop page from refreshing on submit.
     e.preventDefault();
 
+    //? Check if a file is selected.
     if (selectedFile.file === null) {
       alert("Please select a file");
       return;
     }
 
-    return;
+    //? Upload the file to storage.
+    const UPLOAD = await uploadPds(selectedFile.file);
+    if (UPLOAD.status === "error") {
+      alert(UPLOAD.message);
+      return;
+    }
+
+    //? Update states.
+    setSelectedFile({ file: null });
+    setReceipt({
+      ...UPLOAD.data,
+      map: {},
+    });
   };
 
   return (
     <>
       <Tab.Group as={Fragment}>
         <Platform className="mt-10 mb-5">
-          <Tab.List className="flex items-center justify-between gap-1 p-1 bg-red-700 rounded-md">
+          <Tab.List className="flex items-center justify-between gap-1 rounded-md bg-red-700 p-1">
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
@@ -76,7 +78,7 @@ export default function Upload() {
           </Tab.List>
         </Platform>
         <Platform>
-          <Tab.Panels className="flex items-center justify-center p-2 bg-gray-200 rounded-md">
+          <Tab.Panels className="flex items-center justify-center rounded-md bg-gray-200 p-2">
             <Tab.Panel className="w-full">
               <div>
                 <h1 className="text-xl font-medium">Upload</h1>
@@ -85,19 +87,28 @@ export default function Upload() {
                 </p>
               </div>
               <div>
-                <form className="">
+                <form onSubmit={onPdsSubmit}>
                   <input
                     type="file"
-                    className="w-full p-4 mt-4 font-mono text-sm font-semibold rounded-md cursor-pointer hover:bg-gray-100"
+                    className="mt-4 w-full cursor-pointer rounded-md p-4 font-mono text-sm font-semibold hover:bg-gray-100"
                     onChange={(e) => {
-                      setSelectedFile({
-                        ...selectedFile,
+                      if (
+                        e.target.files[0].type !==
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                      ) {
+                        e.target.value = null;
+                        alert("Please upload an excel file");
+                        return;
+                      }
+
+                      setSelectedFile((prev) => ({
+                        ...prev,
                         file: e.target.files[0],
-                      });
+                      }));
                     }}
                   />
 
-                  <div className="flex items-center justify-end w-full mt-2 gap-x-2">
+                  <div className="mt-2 flex w-full items-center justify-end gap-x-2">
                     <button
                       type="reset"
                       className={classMerge(
@@ -111,22 +122,16 @@ export default function Upload() {
                       className={classMerge(
                         "rounded-md bg-white p-2 text-sm font-semibold uppercase hover:bg-green-500"
                       )}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        if (selectedFile.file === null) {
-                          alert("Please select a file");
-                          return;
-                        }
-                      }}
                     >
                       Upload
                     </button>
                   </div>
                 </form>
               </div>
-              <div></div>
             </Tab.Panel>
-            <Tab.Panel className="w-full">Preview Content</Tab.Panel>
+            <Tab.Panel className="w-full">
+              <UploadPreview receipt={receipt} />
+            </Tab.Panel>
           </Tab.Panels>
         </Platform>
       </Tab.Group>
