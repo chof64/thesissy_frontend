@@ -18,7 +18,7 @@ export default async function extract(req, res) {
   const body = req.body;
 
   const response = await fetch(
-    "https://backend-thesissy.chadfernandez.me/extract/json",
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/extract/json`,
     {
       method: "POST",
       body: JSON.stringify(body),
@@ -27,18 +27,6 @@ export default async function extract(req, res) {
       },
     }
   );
-
-  // send a POST request to the backend with the json
-  // const response = await fetch(
-  //   "https://backend-thesissy.chadfernandez.me/extract/json",
-  //   {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: json,
-  //   }
-  // );
 
   return res
     .status(200)
